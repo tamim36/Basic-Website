@@ -21,4 +21,9 @@ class MessagesController extends Controller
 
         return redirect('/')->with('status', 'message sent');
     }
+    public function getMessages(){
+        $msg = Message::all();
+
+        return view('allmessages')->with('messages', $msg);
+    }
 }
