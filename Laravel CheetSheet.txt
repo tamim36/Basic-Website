@@ -1,0 +1,150 @@
+////////////////////////////////////////////////////////
+Starting a project
+///////////////
+1. composer create-project laravel/laravel appname
+   (before do this cd xampp/htdocs and after cd appname)
+2. go to C:\xampp\apache\conf\extra and edit vhosts.conf
+3. open notepad in admin mode and open file
+   C:\Windows\System32\drivers\etc hosts and add another domain
+4. open xaamp and stop apache and start again
+
+
+
+
+//////////////////////////////////////////////////////
+npm start
+////////////
+1. add css <link rel="stylesheet" href="{{asset('css/app.css')}}">
+2. npm install
+3. npm run dev
+4. npm run watch
+5. ctrl+c to stop
+
+
+
+//////////////////////////////////////////////////////
+Adding css for styling
+///////////////////
+1. create new file in sass folder _custom.scss
+2. add @import 'custom'; in app.scss
+
+
+
+/////////////////////////////////////////////////////
+add laravel collective form
+/////////////////
+1. go to laravel collective html & forms
+2. install , add provider, aliase, label & text
+3. Route::post('/contact/submit', 'MessagesController@submit');
+4. {{Form::label('name', 'Name' )}}
+   {{Form::text('name', '', ['class' => 'form-control', 'placeholder'=>'Enter name'])}}
+
+5. sample : contact.blade.php ***********
+
+
+///////////////////////////////////////////////////////
+Controller & Validation
+////////////////
+1. user input to routes to controller.
+2. controller sends data to model and get updates from and view it
+3. make controller by
+                       php artisan make:controller controllername **********
+4. make validation to show error
+5. sample : messagecontroller and inc.messages
+
+
+////////////////////////////////////////////////////////
+Model Database & migration
+//////////////////////
+1. make model by
+		php artisan make:model modelname -m ************
+2. create new database in phpmyadmin
+3. make field of table in Database.migration file
+4. Goto providers -> appserviceproviders
+5. add 
+	use Illuminate\Support\Facades\Schema;
+	public function boot()
+   	 {
+        Schema::defaultStringLength(191);
+   	 }
+6. go to .env 
+	DB_CONNECTION=mysql
+	DB_DATABASE= databasename created in step 2
+	DB_USERNAME=root
+	DB_PASSWORD=null
+7. php artisan migrate************
+	to create table
+8. go to controller and add model and store data
+	use App\Message;
+	
+	//////here Message model name
+	
+	$msg = new Message;///// here $msg a variable , Message model name
+        $msg->name = $request->input('name');
+        $msg->email = $request->input('email');
+        $msg->message = $request->input('message');
+        $msg->save();
+
+9. sample : messagescontroller, appserprov, msgmigration
+
+
+
+
+//////////////////////////////////////////////////////
+Fetch Data from database
+//////////////////
+1. make get function like
+	public function getMessages(){
+        $msg = Message::all();
+
+        return view('allmessages')->with('messages', $msg);
+    }
+
+2. set route 
+	Route::get('/messages', 'MessagesController@getMessages');
+3. make view file to view data
+
+/////////////////////////////////////////////////////
+Show from pagescontroller
+/////////////////////
+1. at web
+	Route::get('/', 'PagesController@getHome');
+2. at pagescontroller
+	public function getHome(){
+        return view('home');
+    }
+
+/////////////////////////////////////////////
+To highlight running page
+//////////////
+1. add this to navbar -> li class
+      {{Request::is('/') ? 'active' : ''}}
+
+
+
+
+///////////////////////////////////////////////////////
+VS code push projects to github
+/////////////
+
+1) Navigate to the local project directory and create a local git repository:
+
+ git init
+2) Once that is successful, click on the 'Source Control' icon on the left navbar in VS-Code.One should be able to see files ready to be commit-ed. Press on 'Commit' button, provide comments, stage the changes and commit the files. Alternatively you can run from CLI
+
+git commit -m "Your comment"
+3) Now you need to visit your GitHub account and create a new Repository. Exclude creating 'README.md', '.gitIgnore' files. Also do not add any License to the repo. Sometimes these settings cause issue while pushing in.
+
+4) Copy the link to this newly created GitHub Repository.
+
+5) Come back to the terminal in VS-CODE and type these commands in succession:
+
+git remote add origin <Link to GitHub Repo>     //maps the remote repo link to local git repo
+
+git remote -v                                  //this is to verify the link to the remote repo 
+
+git push -u origin master                      // pushes the commit-ed changes into the remote
+
+
+
+
